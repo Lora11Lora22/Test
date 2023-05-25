@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,6 +77,9 @@ public class RunTestPage extends BasePage {
 
     @FindBy(id = "checkout")
     WebElement checkoutButton;
+
+    @FindBy(id = "cart_contents_container")
+    WebElement cartContainer;
 
     @FindBy(xpath = "//*[@id=\"header_container\"]/div[2]")
     WebElement headerCheckoutPage;
@@ -148,6 +152,8 @@ public class RunTestPage extends BasePage {
         makePause(2000);
         assertThat(loginPage.isDisplayed()).isTrue();
     }
+
+    ///////////////////////// BUY PROCESS METHODS/////////////////////////////////
 
     public void addItem() {
         assertThat(catalogItems.isDisplayed()).isTrue();
@@ -227,6 +233,51 @@ public class RunTestPage extends BasePage {
         assertThat(catalogItems.isDisplayed()).isTrue();
     }
 
+    public void checkCancellationOfPurchase(String expectedItemTitle) {
+        assertThat(shoppingCartButton.isDisplayed()).isTrue();
+        shoppingCartButton.click();
+        assertThat(checkoutButton.isDisplayed()).isTrue();
+        checkoutButton.click();
+        fieldFirstName.clear();
+        fieldFirstName.sendKeys("TestQA");
+        fieldLastName.clear();
+        fieldLastName.sendKeys("TestQA");
+        fieldPostalCode.clear();
+        fieldPostalCode.sendKeys("123Test");
+        continueButton.click();
+        cancelButton.isDisplayed();
+        cancelButton.click();
+        assertThat(catalogItems.isDisplayed()).isTrue();
+        assertThat(shoppingCartButton.isDisplayed()).isTrue();
+        shoppingCartButton.click();
+        assertThat(cartContainer.isDisplayed()).isTrue();
+
+        WebElement itemTitleElement = driver.findElement(By.id("item_1_title_link"));
+        String actualItemTitle = itemTitleElement.getText();
+        System.out.println(actualItemTitle);
+        assertThat(actualItemTitle).isEqualTo(expectedItemTitle);
+        removeButtonInCart.click();
+    }
+
+    public void itemOnPage() {
+        List<WebElement> items = driver.findElements(By.xpath("//*[@id=\"inventory_container\"]/div/div"));
+        int itemCount = items.size();
+        System.out.println("Item on Page: " + itemCount);
+    }
+
+    public void descriptionProduct() {
+        List<WebElement> items = driver.findElements(By.xpath("//*[@id=\"inventory_container\"]/div/div"));
+        for (WebElement item : items) {
+            boolean hasPrice = item.findElement(By.xpath("//*[@id=\"inventory_container\"]/div/div[2]/div[2]/div[2]/div")).isDisplayed();
+            boolean hasDescription = item.findElement(By.xpath("//*[@id=\"inventory_container\"]/div/div[2]/div[2]/div")).isDisplayed();
+            boolean hasPhoto = item.findElement(By.xpath("//*[@id=\"inventory_container\"]/div/div[2]/div")).isDisplayed();
+            System.out.println("The item contains a price: " + hasPrice);
+            System.out.println("The item contains a description: " + hasDescription);
+            System.out.println("The item contains a photo: " + hasPhoto);
+        }
+
+         ///////////////////////// MAIN PAGE VERIFIER METHODS/////////////////////////////////
+    }
     public void dropdownMenuTest() {
         WebElement dropdownElement = driver.findElement(By.xpath("//*[@id=\"header_container\"]/div[2]/div/span/select"));
         Select dropdown = new Select(dropdownElement);
@@ -264,15 +315,17 @@ public class RunTestPage extends BasePage {
         assertThat(sidebarAllItemsButton.isDisplayed()).isFalse();
         menuButton.click();
         sidebarAllItemsButton.click();
-        makePause(2000);
+        makePause(5000);
         sidebarAboutButton.click();
-        String currentUrl = driver.getCurrentUrl();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("https://saucelabs.com/"));
+         String currentUrl = driver.getCurrentUrl();
         if (currentUrl.equals("https://saucelabs.com/")) {
             System.out.println("Navigation was successful.");
         } else {
             System.out.println("Navigation error.");
         }
-        driver.navigate().back();
+            driver.navigate().back();
         makePause(Variables.NORMAL_SLEEP);
     }
 
@@ -292,7 +345,7 @@ public class RunTestPage extends BasePage {
         if (currentUrl.contains("https://twitter.com/saucelabs")) {
             System.out.println("Navigation to the Twitter page was successful.");
         } else {
-            System.out.println("Error navigation to a new page.");
+            System.out.println("Error navigation to the Twitter page.");
         }
     }
 
@@ -312,7 +365,7 @@ public class RunTestPage extends BasePage {
         if (currentUrl.contains("https://www.facebook.com/saucelabs")) {
             System.out.println("Navigation to the Facebook page was successful.");
         } else {
-            System.out.println("Error navigation to a new page.");
+            System.out.println("Error navigation to the Facebook page.");
         }
     }
 
@@ -336,7 +389,11 @@ public class RunTestPage extends BasePage {
                 "referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fcompany%2Fsauce-labs%2F")) {
             System.out.println("Navigation to the Linkedin page was successful.");
         } else {
-            System.out.println("Error navigation to a new page.");
+            System.out.println("Error navigation to the Linkedin page.");
         }
     }
+
+
+
+
 }

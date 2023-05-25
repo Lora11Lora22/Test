@@ -6,6 +6,8 @@ public class RunTestSteps {
 
     RunTestPage page = new RunTestPage();
 
+    ///////////////////////// LOGIN METHODS/////////////////////////////////
+
     public void verifyThatTestStarted() {
         page.assertThatHeaderExists();
     }
@@ -26,6 +28,20 @@ public class RunTestSteps {
         page.assertCheckLogout();
     }
 
+    ///////////////////////// BUY PROCESS METHODS/////////////////////////////////
+
+    public void countItemOnMainPage() {
+        page.itemOnPage();
+    }
+
+    public void productDescription() {
+        page.descriptionProduct();
+    }
+
+    public void cancelCheckoutProcess() {
+        page.checkCancellationOfPurchase("Sauce Labs Bolt T-Shirt");
+    }
+
     public void addItemToCart() {
         page.addItem();
     }
@@ -41,6 +57,8 @@ public class RunTestSteps {
     public void checkoutProcess() {
         page.fillDeliveryDetails();
     }
+
+    ///////////////////////// MAIN PAGE VERIFIER METHODS/////////////////////////////////
 
     public void verifyThatDropdownWork() {
         page.dropdownMenuTest();

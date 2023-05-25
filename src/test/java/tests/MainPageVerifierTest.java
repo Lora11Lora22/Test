@@ -3,7 +3,7 @@ package tests;
 import org.testng.annotations.Test;
 import steps.RunTestSteps;
 
-public class MainPageVerifier extends BaseTest {
+public class MainPageVerifierTest extends BaseTest {
 
     RunTestSteps steps1;
 
