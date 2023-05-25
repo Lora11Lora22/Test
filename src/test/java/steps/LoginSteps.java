@@ -13,7 +13,7 @@ public class LoginSteps {
     }
 
     @SneakyThrows
-    private void inputLoginDate(String user, String password){
+    private void inputLoginDate(String user, String password) {
         loginPage.fillLoginUser(user);
         loginPage.fillLoginPassword(password);
         Thread.sleep(1000);

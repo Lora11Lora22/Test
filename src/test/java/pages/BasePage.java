@@ -12,7 +12,7 @@ public class BasePage {
     protected WebDriver driver;
     public WebDriverWait wait;
 
-    public BasePage(){
+    public BasePage() {
         driver = BaseTest.getDriver();
         PageFactory.initElements(driver, this);
     }
@@ -33,7 +33,7 @@ public class BasePage {
 
     }
 
-    public WebElement waitForVisible(WebElement element){
+    public WebElement waitForVisible(WebElement element) {
         waitForJSToBeLoaded();
         wait.until(ExpectedConditions.visibilityOf(element));
         return element;
@@ -43,8 +43,8 @@ public class BasePage {
         wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
 
-    public WebElement jsclick (WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
+    public WebElement jsclick(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", element);
         return element;
     }

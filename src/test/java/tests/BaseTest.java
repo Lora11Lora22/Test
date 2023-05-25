@@ -34,9 +34,9 @@ public class BaseTest {
 
     @BeforeClass
     @SneakyThrows
-    public void beforeClass(){
+    public void beforeClass() {
         properties = new Properties();
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("config.properties"))){
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get("config.properties"))) {
             properties.load(reader);
             String driverName = properties.getProperty("driver");
             File file = Paths.get(properties.getProperty("path")).toFile();
@@ -54,7 +54,8 @@ public class BaseTest {
             steps = new LoginSteps();
         }
     }
-    public void visit(String paths){
+
+    public void visit(String paths) {
         driver.navigate().to(properties.getProperty("url") + paths);
     }
 }

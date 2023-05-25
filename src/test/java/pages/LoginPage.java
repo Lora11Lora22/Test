@@ -15,18 +15,18 @@ public class LoginPage extends BasePage {
     WebElement loginButton;
 
 
-    public void fillLoginUser(String text){
+    public void fillLoginUser(String text) {
         makePause(3000);
         loginUser.clear();
         loginUser.sendKeys(text);
     }
 
-    public void fillLoginPassword(String text){
+    public void fillLoginPassword(String text) {
         loginPassword.clear();
         loginPassword.sendKeys(text);
     }
 
-    public void clickLoginButton(){
+    public void clickLoginButton() {
         loginButton.click();
     }
 }

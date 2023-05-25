@@ -41,4 +41,25 @@ public class RunTestSteps {
     public void checkoutProcess() {
         page.fillDeliveryDetails();
     }
+
+    public void verifyThatDropdownWork() {
+        page.dropdownMenuTest();
+    }
+
+    public void verifyThatSidebarWork() {
+        page.sidebarMenuTest();
+    }
+
+    public void verifyThatTwitterLinkOpen() {
+        page.twitterLink();
+    }
+
+    public void verifyThatFacebookLinkOpen() {
+        page.facebookLink();
+    }
+
+    public void verifyThatLinkedinLinkOpen() {
+        page.linkedinLink();
+    }
+
 }
